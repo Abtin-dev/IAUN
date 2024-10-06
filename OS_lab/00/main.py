@@ -5,7 +5,6 @@ Session 0
 """
 from time import *
 from threading import *
-import keyboard as kb
 
 
 print("############################## first code ################################")
