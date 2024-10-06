@@ -1,8 +1,8 @@
+import numpy as np
 import threading as th
 from time import sleep
 from colorama import Back, Style
 from random import randint, choice
-import numpy as np
 
 Buffer_size:int = 5
 Buffer = np.zeros(Buffer_size, dtype=int) #Array of 0
@@ -28,11 +28,9 @@ def adder():
     Add a random number to the Buffer
     """
     global Buffer, _in, _out
-    i = 0
     while True:
         with lock:
             _in, _out = _in%Buffer_size, _out%Buffer_size
-            i += 1
             if Buffer_chek(_in, _out) != 1:
                 rand = randint(1,100)
                 Buffer[_in] = rand
@@ -49,17 +47,15 @@ def remover():
     Read from Buffer
     """
     global Buffer, _in, _out
-    i = 0
     while True:
         with lock:
             _in, _out = _in%Buffer_size, _out%Buffer_size
-            i += 1
             if Buffer_chek(_in, _out) != -1:
                 print(f"Read {Buffer[_out]} from {_out} ::: {Buffer}")
                 Buffer[_out] = 0
                 _out += 1
             elif Buffer_chek(_in, _out) == -1:
-                print(Back.RED + f"Buffer is empty :::: {Buffer}" + Style.RESET_ALL)
+                print(Back.RED + f"Buffer is empty ::: {Buffer}" + Style.RESET_ALL)
         sleep(choice([1, 0.8, 0.2]))
 
 def main():
